@@ -48,25 +48,32 @@ class Queue:
 
 
 def buyTicket(arr, n, k):
-    time = 0
-    flag = 0
-    d = {i: v for i, v in enumerate(arr)}
-    for word in range(n):
-        for i, v in d.copy().items():
-            if v < max(d.values()):
-                d.pop(i)
-                d.update({i: v})
-
-            elif flag == 1:
-                break
-
+    q = Queue()
+    maxHeap = []
+    heap.heapify(maxHeap)
+    for element in arr:
+        q.enqueue(element)
+        heap.heappush(maxHeap, -1*element)
+    count = 0
+    while len(maxHeap) != 0:
+        if q.peek() == -1*maxHeap[0]:
+            if k == 0:
+                return count + 1
             else:
-                d.pop(i)
-                time = time + 1
-                
-                if i == k:
-                    flag = 1
-    print(time)
+                count += 1
+                q.dequeue()
+                heap.heappop(maxHeap)
+                k -= 1
+        else:
+            q.enqueue(q.peek())
+            q.dequeue()
+            if k == 0:
+                k = q.getSize() - 1
+            else:
+                k -= 1
+    return count
+
+#taking input using fast I/O
 
 
 def takeInput():
@@ -81,4 +88,4 @@ def takeInput():
 #main
 sys.setrecursionlimit(10**6)
 n, arr, k = takeInput()
-buyTicket(arr, n, k)
+print(buyTicket(arr, n, k))
