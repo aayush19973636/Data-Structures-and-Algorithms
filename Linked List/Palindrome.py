@@ -15,53 +15,13 @@ class Node:
         self.next = None
 
 
-def reverse(head):
+def isPalindrome(head) :
+    arr = []
+    while head is not None:
+        arr.append(head.data)
+        head = head.next
+    return arr==arr[::-1]
 
-    prev = None
-    current = head
-    next = None
-
-    while current != None:
-        next = current.next
-        current.next = prev
-        prev = current
-        current = next
-
-    return prev
-
-def isPalindrome(head):
-    if head is not None and head.next is not None:
-        return True
-    
-    fast = head
-    slow = head
-
-    while fast is not None and fast.next is not None:
-        fast = fast.next.next
-        slow = slow.next
-    
-    secondHalf = slow.next
-    slow.next = None
-    secondHalf = reverse(secondHalf)
-
-    firstSublist = secondHalf
-    secondSublist = head
-
-    while firstSublist is not None:
-        if firstSublist.data != secondSublist.data:
-            return False
-        firstSublist = firstSublist.next
-        secondSublist = secondSublist.next
-    
-    firstSublist  = head
-    secondSublist  = reverse(secondHalf)
-
-    while firstSublist.next is not None:
-        firstSublist = firstSublist.next
-    
-    firstSublist.next = secondSublist
-
-    return True
 
 
 
